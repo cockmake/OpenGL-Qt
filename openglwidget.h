@@ -12,6 +12,8 @@ class OpenGLWidget : public QOpenGLWidget, QOpenGLFunctions_4_5_Core
     Q_OBJECT
 public:
     explicit OpenGLWidget(QWidget *parent = nullptr);
+    static float vertices[];
+    GLuint VBO, VAO;
 
 
 protected:

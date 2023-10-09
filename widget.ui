@@ -10,6 +10,12 @@
     <height>508</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>700</width>
+    <height>500</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Widget</string>
   </property>
@@ -49,7 +55,14 @@
     </widget>
    </item>
    <item>
-    <widget class="OpenGLWidget" name="openGLWidget"/>
+    <widget class="OpenGLWidget" name="openGLWidget">
+     <property name="minimumSize">
+      <size>
+       <width>600</width>
+       <height>300</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
