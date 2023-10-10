@@ -14,28 +14,89 @@ void OpenGLWidget::initializeGL()
 {
     // 绑定本地函数指针
     initializeOpenGLFunctions();
-
     //创建VBO，VAO，并赋予ID
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+//    glGenVertexArrays(1, &VAO);
+
+    glGenBuffers(1, &VBO); // 申请ID
 
     //绑定到VBO，VAO对象上
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+//    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);  //ID绑定的对象值类型
 
     //为当前绑定到target的缓冲区对象创建一个新的数据存储
     //如果data不是nullptr，则使用来自此指针的数据初始化数据存储
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // 初始化缓存区对应的数据
 
     //告知显卡如何解析缓冲区里的属性值
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
-                          static_cast<void*>(0));
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+//                          static_cast<void*>(0));
 
     //开启VAO管理第一个属性值
-    glEnableVertexAttribArray(0);
+//    glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    //解除绑定
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    glBindVertexArray(0);
+
+
+    // 创建一个着色器对象，注意还是用ID来引用的
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    // 绑定顶点着色器源码附加到着色器对象上，然后编译它：
+    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+    glCompileShader(vertexShader);
+    GLint vertexSuccess;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vertexSuccess);
+    char log[512];
+    if(vertexSuccess){
+        cout<<"构建着色器成功！"<<endl;
+    }else{
+        cout<<"构建着色器失败！"<<endl;
+        glGetShaderInfoLog(vertexShader, 512, nullptr, log);
+        cout<<log<<endl;
+    }
+    // 定义片段着色器
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+    // 绑定片段着色器源码并附加到着色器对象上，然后对他进行编译
+    GLint fragmentSuccess;
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
+    glCompileShader(fragmentShader);
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fragmentSuccess);
+    glGetShaderInfoLog(fragmentShader, 512, nullptr, log);
+    if(fragmentSuccess){
+        cout<<"构建着色器成功！"<<endl;
+    }else{
+        cout<<"构建着色器失败！"<<endl;
+        glGetShaderInfoLog(fragmentShader, 512, nullptr, log);
+        cout<<log<<endl;
+    }
+
+    // 构建渲染程序
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    // 链接渲染程序
+    glLinkProgram(shaderProgram);
+
+    // 判断是否链接成功
+    GLint programSuccess;
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &programSuccess);
+
+    if(!programSuccess){
+        cout<<"渲染程序构建失败！"<<endl;
+        glGetProgramInfoLog(shaderProgram, 512, nullptr, log);
+        cout<<log<<endl;
+    }else{
+        cout<<"渲染程序构建成功！"<<endl;
+    }
+
+    // 使用链接后的程序
+    glUseProgram(shaderProgram);
+
+    // 在把着色器对象链接到程序对象以后，记得删除着色器对象，我们不再需要它们了：
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
 }
 
 void OpenGLWidget::resizeGL(int w, int h)
@@ -49,17 +110,17 @@ void OpenGLWidget::paintGL()
     /*
      * 定点着色器（必须）
      * 形状装配器
-     * 几何着色器
+     * 几何着色器（选择）
      * 光栅化
      * 片段着色器（必须）
      * 测试与混合
     */
     // 窗口大小发生变化时会触发一次绘制
     // 函数使用之前必须要进行初始化，即指向显卡中的函数，否则函数为空指针
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+//    glBindVertexArray(VAO);
+//    glDrawArrays(GL_TRIANGLES, 0, 3);
     cout<<"运行结束"<<endl;
 }
