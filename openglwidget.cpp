@@ -71,13 +71,14 @@ void OpenGLWidget::initializeGL()
         cout<<log<<endl;
     }else{
         cout<<"渲染程序构建成功！"<<endl;
+	// 在把着色器对象链接到程序对象以后，记得删除着色器对象，不再需要它们了：
+    	glDeleteShader(vertexShader);
+    	glDeleteShader(fragmentShader);
+
     }
 
 
-    // 在把着色器对象链接到程序对象以后，记得删除着色器对象，不再需要它们了：
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
+    
 
     //创建VBO，并赋予ID
     glGenBuffers(1, &VBO); // 申请ID
