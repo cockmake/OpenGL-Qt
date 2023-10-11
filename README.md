@@ -1,4 +1,4 @@
-# Hello Triangle
+# Chapter One
 
 ![img](images/2023-10-10%2000-43-00.png)
 
@@ -84,5 +84,5 @@
     >       >   2.   通过glVertexAttribPointer设置的顶点属性配置。
     >       >   3.   通过glVertexAttribPointer调用与顶点属性关联的顶点缓冲对象。
 
-
+![img](images/2023-10-11%2023-11-00.png)
 
