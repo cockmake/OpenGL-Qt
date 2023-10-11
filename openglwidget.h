@@ -13,8 +13,9 @@ class OpenGLWidget : public QOpenGLWidget, QOpenGLFunctions_4_5_Core
 public:
     explicit OpenGLWidget(QWidget *parent = nullptr);
     ~OpenGLWidget();
-    static float vertices[];
-    GLuint VBO, VAO;
+    static float vertices[], rectangle[];
+    static GLuint indices[];
+    GLuint VBO, VAO, EBO;
     const char *vertexShaderSource =  "#version 450 core\n"
                                       "layout (location = 0) in vec3 aPos;\n"
                                       "void main()\n"

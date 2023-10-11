@@ -48,7 +48,41 @@
     >
     >   
 
--   >   
+-   >   Q:
+    >
+    >   ```c++
+    >   // 创建VAO对象，并赋予ID
+    >   glGenVertexArrays(1, &VAO);
+    >   // 使用VAO对象上
+    >   glBindVertexArray(VAO);
+    >   //告知显卡如何解析缓冲区里的属性值
+    >   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+    >                         static_cast<GLvoid*>(0));//开启VAO管理第一个属性值
+    >   // 启动location = 0的顶点
+    >   glEnableVertexAttribArray(0);
+    >   ```
+    >
+    >   其中VAO的主要作用到底是什么？工作原理是什么？
+    >
+    >   A:
+    >
+    >   -   VAO的作用
+    >
+    >       >   VAO，全称为Vertex Array Object，即顶点数组对象。在OpenGL中，VAO是用来存储所有关于顶点属性的配置的。这包括glVertexAttribPointer调用的设置，以及与这些属性相关的顶点缓冲对象。这样的设计使得我们可以通过绑定不同的VAO，来切换不同的顶点数据和属性配置。
+    >
+    >   -   VAO的工作原理
+    >
+    >       >   当你创建一个VAO并绑定它之后，任何之后的顶点属性配置都会存储在这个VAO中。这包括任何调用glVertexAttribPointer的设置，以及通过glEnableVertexAttribArray和glDisableVertexAttribArray启用和禁用顶点属性数组。这意味着，VAO已经存储了所有需要渲染对象所需的信息。当我们需要绘制对象时，只需要绑定相应的VAO，OpenGL就会使用VAO中的所有配置。这样，我们就可以通过切换不同的VAO，来切换不同的顶点缓冲对象和属性配置，从而绘制出不同的对象。
+    >
+    >   -   VAO的优点
+    >
+    >       >   使用VAO的主要优点是可以减少绘制对象所需的设置次数。如果没有VAO，每次绘制对象时，我们都需要重新设置所有的顶点属性。但是有了VAO，我们只需要在创建对象时设置一次，然后在绘制时只需要绑定相应的VAO即可。这样不仅可以简化代码，还可以提高效率。总的来说，VAO的主要作用是存储顶点属性配置，使得我们可以通过切换不同的VAO，来切换不同的顶点数据和属性配置，从而绘制出不同的对象。
+    >
+    >   -   VAO中记录的信息状态
+    >
+    >   -   >   1.   glEnableVertexAttribArray和glDisableVertexAttribArray的调用。
+    >       >   2.   通过glVertexAttribPointer设置的顶点属性配置。
+    >       >   3.   通过glVertexAttribPointer调用与顶点属性关联的顶点缓冲对象。
 
 
 

@@ -5,6 +5,17 @@ float OpenGLWidget::vertices[] = {
     0.5f, -0.5f, 0.0f,
     0.0f, 0.5f, 0.0f
 };
+
+float OpenGLWidget::rectangle[] = {
+    0.5f, 0.5f, 0.0f,   // 右上角
+    0.5f, -0.5f, 0.0f,  // 右下角
+    -0.5f, -0.5f, 0.0f, // 左下角
+    -0.5f, 0.5f, 0.0f   // 左上角
+};
+GLuint OpenGLWidget::indices[] = {
+    0, 1, 3,
+    1, 2, 3
+};
 OpenGLWidget::OpenGLWidget(QWidget *parent): QOpenGLWidget(parent)
 {
     cout<<"运行开始"<<endl;
@@ -78,27 +89,41 @@ void OpenGLWidget::initializeGL()
     }
 
 
-    
 
-    //创建VBO，并赋予ID
+    // VAO的作用
+    // 创建VAO对象，并赋予ID
+    glGenVertexArrays(1, &VAO);
+    // 使用VAO对象上
+    glBindVertexArray(VAO);
+    // VBO， EBO主要是用来绑定数据的
+
+    // 创建VBO，并赋予ID
     glGenBuffers(1, &VBO); // 申请ID
-    //绑定到VBO对象上
+    // 绑定到VBO对象上
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     // 为当前绑定到target的缓冲区对象创建一个新的数据存储
     // 如果data不是nullptr，则使用来自此指针的数据初始化数据存储
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // 初始化缓存区对应的数据
+    glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle), rectangle, GL_STATIC_DRAW); // 初始化缓存区对应的数据
 
-    // VAO的作用主要是告诉显卡如何解析VBO中的数据的
-    // 创建VAO对象，并赋予ID
-    glGenVertexArrays(1, &VAO);
-    // 绑定到VAO对象上
-    glBindVertexArray(VAO);
-    //告知显卡如何解析缓冲区里的属性值
+    // 创建EBO，并赋予ID
+    glGenBuffers(1, &EBO);
+    // 绑定到EBO对象上
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    // 为对顶缓存区绑定数据
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
+
+
+    // 先绑定好数据才能告诉如何渲染
+    // 告知显卡如何解析缓冲区里的属性值 改配置信息会记录在VAO中
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                           static_cast<GLvoid*>(0));
-
-    //开启VAO管理第一个属性值
+    // 开启VAO管理第一个属性值
     glEnableVertexAttribArray(0);
+
+
+
 }
 
 void OpenGLWidget::resizeGL(int w, int h)
@@ -124,8 +149,9 @@ void OpenGLWidget::paintGL()
 
     // 使用链接后的程序
     glUseProgram(shaderProgram);
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindVertexArray(VAO); // 绑定所要使用的VAO
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+//    glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0); // 使用完以后进行解绑
     cout<<"运行结束"<<endl;
 }
