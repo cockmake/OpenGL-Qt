@@ -89,7 +89,6 @@ void OpenGLWidget::initializeGL()
     }
 
 
-
     // VAO的作用
     // 创建VAO对象，并赋予ID
     glGenVertexArrays(1, &VAO);
@@ -105,7 +104,7 @@ void OpenGLWidget::initializeGL()
     // 如果data不是nullptr，则使用来自此指针的数据初始化数据存储
     glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle), rectangle, GL_STATIC_DRAW); // 初始化缓存区对应的数据
 
-    // 创建EBO，并赋予ID
+    // 创建EBO，并赋予ID，注意EBO的状态要被VAO记录，VAO的绑定要在EBO的绑定之前
     glGenBuffers(1, &EBO);
     // 绑定到EBO对象上
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -113,15 +112,21 @@ void OpenGLWidget::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 
-
-
-    // 先绑定好数据才能告诉如何渲染
-    // 告知显卡如何解析缓冲区里的属性值 改配置信息会记录在VAO中
+    // 告知显卡如何解析缓冲区里的属性值，该配置信息会记录在VAO中
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                           static_cast<GLvoid*>(0));
     // 开启VAO管理第一个属性值
     glEnableVertexAttribArray(0);
 
+    // 当目标是GL_ELEMENT_ARRAY_BUFFER的时候，VAO会储存glBindBuffe的函数调用。
+    // 这也意味着它也会储存解绑调用，所以确保你没有在解绑VAO之前解绑索引数组缓冲，
+    // 否则它就没有这个EBO配置了。
+
+
+
+    // 更换绘制模式为线条
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
 }
@@ -150,7 +155,7 @@ void OpenGLWidget::paintGL()
     // 使用链接后的程序
     glUseProgram(shaderProgram);
     glBindVertexArray(VAO); // 绑定所要使用的VAO
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 //    glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0); // 使用完以后进行解绑
     cout<<"运行结束"<<endl;
