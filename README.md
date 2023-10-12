@@ -142,6 +142,6 @@
 >   >   }
 >   >   ```
 >
->   <img src="images/2023-10-12%2022-12-00.gif" alt="gif"></img>
+>   <img src="https://github.com/cockmake/OpenGL-Qt/blob/main/images/2023-10-12%2022-12-00.gif" alt="gif"></img>
 
 ![img](images/2023-10-12%2022-04-00.jpg)
