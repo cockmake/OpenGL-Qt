@@ -17,13 +17,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    openglwidget.cpp \
-    shader.cpp \
     widget.cpp
 
 HEADERS += \
-    openglwidget.h \
-    shader.h \
     widget.h
 
 FORMS += \
@@ -34,6 +30,4 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-
 LIBS += -lopengl32 -lglu32
-
