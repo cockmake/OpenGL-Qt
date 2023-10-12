@@ -26,6 +26,11 @@
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,6">
    <item>
     <widget class="QWidget" name="functionWidget" native="true">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
      <widget class="QPushButton" name="paintBtn">
       <property name="geometry">
        <rect>
