@@ -57,7 +57,7 @@
     >   glBindVertexArray(VAO);
     >   //告知显卡如何解析缓冲区里的属性值
     >   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
-    >                         static_cast<GLvoid*>(0));//开启VAO管理第一个属性值
+    >                        static_cast<GLvoid*>(0));//开启VAO管理第一个属性值
     >   // 启动location = 0的顶点
     >   glEnableVertexAttribArray(0);
     >   ```
@@ -80,8 +80,10 @@
     >
     >   -   VAO中记录的信息状态
     >
-    >   -   >   1.   glEnableVertexAttribArray和glDisableVertexAttribArray的调用。
+    >       >   1.   glEnableVertexAttribArray和glDisableVertexAttribArray的调用。
+    >       >
     >       >   2.   通过glVertexAttribPointer设置的顶点属性配置。
+    >       >
     >       >   3.   通过glVertexAttribPointer调用与顶点属性关联的顶点缓冲对象。
 
 ![img](images/2023-10-11%2023-11-00.png)
@@ -103,3 +105,43 @@
 
 
 ## Chapter Two
+
+>   >   着色器的开头总是要声明版本，接着是输入和输出变量、uniform和main函数。每个着色器的入口点都是main函数，在这个函数中我们处理所有的输入变量，并将结果输出到输出变量中。
+>
+>   ```GLSL
+>   #version version_number
+>   in type in_variable_name;
+>   in type in_variable_name;
+>   
+>   out type out_variable_name;
+>   
+>   uniform type uniform_name;
+>   
+>   int main()
+>   {
+>     // 处理输入并进行一些图形操作
+>     ...
+>     // 输出处理过的结果到输出变量
+>     out_variable_name = something_we_processed;
+>   }
+>   ```
+
+>   <font size=20>Uniform</font>
+>
+>   >   Uniform是一种从CPU中的应用向GPU中的着色器发送数据的方式，但uniform和顶点属性有些不同。首先，uniform是全局的(Global)。全局意味着uniform变量必须在每个着色器程序对象中都是独一无二的，而且它可以被着色器程序的任意着色器在任意阶段访问。第二，无论你把uniform值设置成什么，uniform会一直保存它们的数据，直到它们被重置或更新。
+>   >
+>   >   我们可以在一个着色器中添加`uniform`关键字至类型和变量名前来声明一个GLSL的uniform。从此处开始我们就可以在着色器中使用新声明的uniform了。我们来看看这次是否能通过uniform设置三角形的颜色：
+>   >
+>   >   ```GLSL
+>   >   #version 330 core
+>   >   out vec4 FragColor;
+>   >   uniform vec4 ourColor; // 在OpenGL程序代码中设定这个变量
+>   >   void main()
+>   >   {
+>   >       FragColor = ourColor;
+>   >   }
+>   >   ```
+>
+>   ![mp4](images/2023-10-12%2022-12-00.gif)
+
+![img](images/2023-10-12%2022-04-00.jpg)
