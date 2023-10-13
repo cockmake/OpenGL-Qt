@@ -13,6 +13,11 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QOpenGLWidget" name="glWidget"/>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

@@ -1,21 +1,32 @@
-#ifndef WIDGET_H
+﻿#ifndef WIDGET_H
 #define WIDGET_H
 
 #include <QWidget>
+#include <glm.hpp>
+#include <QtOpenGL>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
+#include <iostream>
+using namespace std;
+using namespace glm;
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class Widget; }
+namespace Ui
+{
+    class Widget;
+}
 QT_END_NAMESPACE
 
 class Widget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  Widget(QWidget *parent = nullptr);
-  ~Widget();
+    Widget(QWidget *parent = nullptr);
+    ~Widget();
+    int c;
 
 private:
-  Ui::Widget *ui;
+    Ui::Widget *ui;
 };
 #endif // WIDGET_H

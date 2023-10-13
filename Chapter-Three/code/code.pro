@@ -31,3 +31,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 LIBS += -lopengl32 -lglu32
+
+INCLUDEPATH += ../../glm
+
