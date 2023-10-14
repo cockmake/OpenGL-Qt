@@ -18,12 +18,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     openglwidget.cpp \
-    shader.cpp \
     widget.cpp
 
 HEADERS += \
     openglwidget.h \
-    shader.h \
     widget.h
 
 FORMS += \

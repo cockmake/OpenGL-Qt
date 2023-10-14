@@ -30,6 +30,7 @@ public:
     QOpenGLTexture texture0, texture1;
     ~OpenGLWidget();
     void changeR(float v);
+    void keyPressEvent(QKeyEvent *e) override;
 protected:
     float greenColor = 1.0f, bias = 0.0f, r = 0.5f;
     void initializeGL() override;

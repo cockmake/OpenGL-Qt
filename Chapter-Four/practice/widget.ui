@@ -73,7 +73,11 @@
     </widget>
    </item>
    <item>
-    <widget class="OpenGLWidget" name="glWidget"/>
+    <widget class="OpenGLWidget" name="glWidget">
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

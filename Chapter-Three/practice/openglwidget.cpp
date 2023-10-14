@@ -40,7 +40,6 @@ OpenGLWidget::~OpenGLWidget()
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram);
-    doneCurrent();
     cout << "program over" << endl;
 }
 
@@ -75,13 +74,11 @@ void OpenGLWidget::initializeGL()
     glEnableVertexAttribArray(1);
 
     // 构建顶点着色器和片段着色器
-//    bool success = shaderP.addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSourceWithColor);
     bool success = shaderP.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shader/shader.vert");
     if(!success)
     {
         cout << shaderP.log().toStdString() << endl;
     }
-//    success = shaderP.addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSourceWithColor);
     success = shaderP.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader/shader.frag");
     if(!success)
     {
@@ -101,20 +98,10 @@ void OpenGLWidget::paintGL()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // 使用链接后的程序
-//    glUseProgram(shaderProgram);
-//    int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-//    glUniform4f(vertexColorLocation, 0.0f, greenColor, 0.0f, 1.0f);  // 配合uniform关键词使用
-
-    // QT版本的OpenGL
-//    shaderP.bind();
-//    int vertexColorLocation = shaderP.uniformLocation("ourColor");
-//    shaderP.setUniformValue(vertexColorLocation, 0.0f, greenColor, 0.0f, 1.0f);
-
 
     shaderP.bind();
-    int location = shaderP.uniformLocation("bias");
-    shaderP.setUniformValue(location, bias);
+    shaderP.setUniformValue("bias", bias);
+
 
     glBindVertexArray(VAO); // 绑定所要使用的VAO
     glDrawArrays(GL_TRIANGLES, 0, 3);

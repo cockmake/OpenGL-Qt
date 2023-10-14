@@ -24,7 +24,7 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
-    void keyPressEvent(QKeyEvent *e) override;
+
 
 private slots:
     void on_start_clicked();

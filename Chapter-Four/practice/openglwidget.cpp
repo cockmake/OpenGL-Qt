@@ -25,6 +25,20 @@ float OpenGLWidget::verticesWithColors[] =
     0.0f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
     0.5f, 0.5f, 0.0f,   0.0f, 0.0f, 1.0f
 };
+void OpenGLWidget::keyPressEvent(QKeyEvent *e)
+{
+    switch(e->key())
+    {
+        case Qt::Key_Up:
+            changeR(0.1f);
+            break;
+        case Qt::Key_Down:
+            changeR(-0.1f);
+            break;
+        default:
+            break;
+    }
+}
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent),
     texture0(QOpenGLTexture::Target2D),
     texture1(QOpenGLTexture::Target2D)
