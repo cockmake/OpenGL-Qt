@@ -161,6 +161,24 @@
 ## Chapter Three
 
 ## Chapter Four
-![img](images/2023-10-14%2012-35-00.png)
-![img](images/2023-10-14%2012-36-00.png)
-![img](images/2023-10-14%2014-52-00.png)
+> 纹理与混合纹理，纹理坐标、绘制坐标、计算机图像坐标之间的关系。
+> 
+> 如何使用QT加载纹理？如何激活纹理单元？纹理是如何采样的呢？
+> ![img](images/2023-10-14%2012-35-00.png)
+> ![img](images/2023-10-14%2012-36-00.png)
+> ![img](images/2023-10-14%2014-52-00.png)
+
+- Chapter Four question1
+    ![img](images/chapter-four-question1.png)
+
+- Chapter Four question2
+    ![img](images/chapter-four-question2.png)
+
+- Chapter Four question3
+    1. question3-1
+        ![img](images/chapter-four-question3-1.png)
+    2. question3-2
+        ![img](images/chapter-four-question3-2.png)
+
+- Chapter Four question4
+    ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/chapter-four-question4.gif)
