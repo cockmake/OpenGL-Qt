@@ -146,6 +146,18 @@
 
 ![img](images/2023-10-12%2022-04-00.jpg)
 
+-   Chapter Two question1
+
+    ![img](images/chapter-two-question1.png)
+
+-   Chapter Two question2
+
+    ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/chapter-two-question2.gif)
+
+-   Chapter Two question3
+
+    ![img](images/chapter-two-question3.png)
+
 ## Chapter Three
 
 ## Chapter Four
