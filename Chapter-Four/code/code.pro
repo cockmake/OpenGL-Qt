@@ -39,5 +39,6 @@ LIBS += -lopengl32 -lglu32
 
 INCLUDEPATH += ../../glm
 
-RESOURCES +=
+RESOURCES += \
+    src.qrc
 

@@ -145,3 +145,9 @@
 >   ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/2023-10-12%2022-12-00.gif)
 
 ![img](images/2023-10-12%2022-04-00.jpg)
+
+## Chapter Three
+
+## Chapter Four
+![img](images/2023-10-14%2012-35-00.png)
+![img](images/2023-10-14%2012-36-00.png)

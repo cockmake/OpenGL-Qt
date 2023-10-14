@@ -97,7 +97,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-    cout << "着色程序构建完成！" << endl;
+    cout << "built the shader program!" << endl;
 }
 
 Shader::~Shader()

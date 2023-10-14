@@ -19,7 +19,8 @@ class OpenGLWidget : public QOpenGLWidget, QOpenGLFunctions_4_5_Core
 public:
     explicit OpenGLWidget(QWidget *parent = nullptr);
     ~OpenGLWidget();
-    static float vertices[], indices[];
+    static float vertices[];
+    static GLuint indices[];
 protected:
     GLuint texture;
     void initializeGL() override;
