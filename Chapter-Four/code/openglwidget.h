@@ -6,8 +6,9 @@
 #include <QOpenGLFunctions_4_5_Core>
 #include <iostream>
 #include <glm.hpp>
-#include <stb_image.h>
+// #include <stb_image.h>
 #include <QImage>
+#include <QOpenGLTexture>
 #include "shader.h"
 
 using namespace std;
@@ -22,15 +23,17 @@ public:
     static float vertices[];
     static GLuint indices[];
 protected:
-    GLuint texture;
+    GLuint texture, texture1;
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
 private:
-    uchar *data;
-    int width, height, nc;
+    // uchar *data, *data1;
+    // int width, height, nc;
+    // int width1, height1, nc1;
     GLuint VAO, VBO, EBO;
     Shader *shaderProgram;
+    QOpenGLTexture tex0, tex1;
 signals:
 
 };
