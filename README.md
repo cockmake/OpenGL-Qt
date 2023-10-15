@@ -168,7 +168,7 @@
 > 核心原因在于饶z旋转的，由于x（y）坐标先进行了位移变化，所以看起来是“盘旋”。
 
 - Chapter Three question2
-    ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/chapter-three-question1-2.gif)
+    ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/chapter-three-question2.gif)
 
 
 ## Chapter Four
