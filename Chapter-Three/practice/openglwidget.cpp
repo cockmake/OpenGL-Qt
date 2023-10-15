@@ -40,12 +40,12 @@ void OpenGLWidget::setGreenColor()
     float r = static_cast<float>(cur_v) * 1.8f / 3.1415;
     trans.setToIdentity();   // 顺序和读的顺序相反
     trans.translate(0.5, -0.5f, 0.0f);
-    trans.rotate(r, QVector3D(0.0f, 0.0f, 1.0f));
+    trans.rotate(r, QVector3D(1.0f, 0.0f, 0.0f));
 
     trans2.setToIdentity();
     trans2.translate(-0.5, 0.5f, 0.0f);
     trans2.scale(QVector3D(bias, bias, 1.0f));
-    trans2.rotate(r, QVector3D(0.0f, 0.0f, 1.0f));
+    trans2.rotate(r, QVector3D(1.0f, 0.0f, 0.0f));
     update();
 }
 
