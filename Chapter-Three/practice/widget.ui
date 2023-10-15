@@ -49,7 +49,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>变色</string>
+         <string>开始</string>
         </property>
        </widget>
       </item>

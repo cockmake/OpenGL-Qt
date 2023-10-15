@@ -1,20 +1,13 @@
 #version 450 core
-in vec3 aPos;
-in vec3 aColor;
+layout(location = 0) in vec3 aPos;
+layout(location = 1) in vec2 aTexCoord;
 
-out vec3 bPos;
-out vec4 outColor;
 uniform float bias;
+uniform mat4x4 trans;
 
+out vec2 texCoord;
 void main(void)
 {
-    // question1
-//    gl_Position = vec4(aPos.x, -aPos.y, aPos.z, 1.0f);
-    // question2
-//    gl_Position = vec4(aPos.x - bias, aPos.y - bias, aPos.z, 1.0f);
-    // question3
-    gl_Position = vec4(aPos, 1.0f);
-
-    bPos = aPos;
-    outColor = vec4(aColor, 1.0f);
+    gl_Position = trans * vec4(aPos, 1.0f);
+    texCoord = aTexCoord;
 }

@@ -1,7 +1,8 @@
 #include "widget.h"
 #include "ui_widget.h"
 
-Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget){
+Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
+{
     ui->setupUi(this);
 }
 
@@ -12,7 +13,7 @@ Widget::~Widget()
 
 void Widget::on_beg_clicked()
 {
-    ui->glWidget->timer->setInterval(5);
+    ui->glWidget->timer->setInterval(1);
     ui->glWidget->timer->start();
 }
 

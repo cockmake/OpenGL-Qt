@@ -1,15 +1,8 @@
 #version 450 core
-in vec4 outColor;
-
-in vec3 bPos;
+in vec2 texCoord;
 out vec4 fragColor;
-
-
+uniform sampler2D tex;
 void main(void)
 {
-    // question3
-    fragColor = vec4(bPos, 1.0f);
-
-//    fragColor = outColor;
-
+    fragColor = texture2D(tex, texCoord);
 }

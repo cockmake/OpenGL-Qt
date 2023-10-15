@@ -160,7 +160,19 @@
 
 ## Chapter Three
 
+- Chapter Three question3
+    1. question1-1
+        ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/chapter-three-question1-1.gif)
+    2. question1-2
+        ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/chapter-three-question1-2.gif)
+> 核心原因在于饶z旋转的，由于x（y）坐标先进行了位移变化，所以看起来是“盘旋”。
+
+- Chapter Three question2
+    ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/chapter-three-question1-2.gif)
+
+
 ## Chapter Four
+
 > 纹理与混合纹理，纹理坐标、绘制坐标、计算机图像坐标之间的关系。
 > 
 > 如何使用QT加载纹理？如何激活纹理单元？纹理是如何采样的呢？
