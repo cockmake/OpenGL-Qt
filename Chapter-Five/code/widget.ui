@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,12">
    <property name="spacing">
     <number>2</number>
    </property>
@@ -29,6 +29,19 @@
    <property name="bottomMargin">
     <number>3</number>
    </property>
+   <item>
+    <widget class="QPushButton" name="setBtn">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>设置</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="OpenGLWidget" name="openGLWidget"/>
    </item>
