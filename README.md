@@ -196,3 +196,26 @@
 
 - Chapter Four question4
     ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/chapter-four-question4.gif)
+
+## Chapter Five
+
+>   注意（对构建Chapter Five Demo时的一些出错点）
+>
+>   1.   ShaderProgram添加顶点和片段着色器以后不要忘记连接
+>   2.   注意变量的初始化位置和初始化方法，尤其是要用到sizeof(pointer)的地方
+>   3.   QT窗口的构造函数执行完毕和执行中的this->width和this->height不同，如果有用该相关变量的地方在窗口的构造函数执行完毕再赋值
+
+![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/2023-10-18%2000-25-00.gif)
+
+-   Chapter Five question1
+
+    ![img]()
+
+-   Chapter Five question2
+
+    ![img]()
+
+-   Chapter Five question3
+
+    ![img]()
+

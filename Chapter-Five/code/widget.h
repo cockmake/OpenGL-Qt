@@ -7,7 +7,7 @@
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class Widget;
+class Widget;
 }
 QT_END_NAMESPACE
 
@@ -18,6 +18,11 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+
+private slots:
+    void on_setBtn_clicked();
+
+    void on_stopBtn_clicked();
 
 private:
     Ui::Widget *ui;

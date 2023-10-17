@@ -3,22 +3,21 @@
 float OpenGLWidget::vertices[] =
 {
     // 位置   //纹理采样点
-    -0.5f, 0.5f, 0.0f,/*左上*/0.0f, 1.0f,
-    -0.5f, -0.5f, 0.0f,/*左下*/0.0f, 0.0f,
-    0.5f, -0.5f, 0.0f,/*右下*/1.0f, 0.0f,
-    0.5f, 0.5f, 0.0f, /*右上*/1.0f, 1.0f
+    -0.5f,  0.5f,              0.0f, /*左上*/ 0.0f, 1.0f,
+    -0.5f, -0.5f,              0.0f, /*左下*/ 0.0f, 0.0f,
+    0.5f,  -0.5f,              0.0f, /*右下*/ 1.0f, 0.0f,
+    0.5f,   0.5f,              0.0f, /*右上*/ 1.0f, 1.0f
 };
 float OpenGLWidget::verticesWithColors[] =
 {
     // 位置              // 颜色
-    -0.5f, 0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
-    0.0f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.0f,  0.0f, 0.0f, 1.0f
+    -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+    0.0f,  -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+    0.5f,   0.5f, 0.0f, 0.0f, 0.0f, 1.0f
 };
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent),
     texture(QOpenGLTexture::Target2D)
 {
-
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [&]()
     {
@@ -34,10 +33,10 @@ void OpenGLWidget::setGreenColor()
 
     cur_v = (cur_v + 1) % 314;
 
-    float target_value = sin(static_cast<float>(cur_v) / 100.0f);
+    float target_value = sin(static_cast <float>(cur_v) / 100.0f);
 //    greenColor = target_value;
     bias = target_value;
-    float r = static_cast<float>(cur_v) * 1.8f / 3.1415;
+    float r = static_cast <float>(cur_v) * 1.8f / 3.1415;
     trans.setToIdentity();   // 顺序和读的顺序相反
     trans.translate(0.5, -0.5f, 0.0f);
     trans.rotate(r, QVector3D(1.0f, 0.0f, 0.0f));
@@ -78,9 +77,9 @@ void OpenGLWidget::initializeGL()
 
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
-                          reinterpret_cast<void *>(0));
+                          reinterpret_cast <void *>(0));
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
-                          reinterpret_cast<void *>(3 * sizeof(float)));
+                          reinterpret_cast <void *>(3 * sizeof(float)));
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -90,17 +89,17 @@ void OpenGLWidget::initializeGL()
 
     // 构建顶点着色器和片段着色器
     bool success = shaderP.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shader/shader.vert");
-    if(!success)
+    if (!success)
     {
         cout << shaderP.log().toStdString() << endl;
     }
     success = shaderP.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader/shader.frag");
-    if(!success)
+    if (!success)
     {
         cout << shaderP.log().toStdString() << endl;
     }
     success = shaderP.link();
-    if(!success)
+    if (!success)
     {
         cout << shaderP.log().toStdString() << endl;
     }
