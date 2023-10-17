@@ -15,7 +15,7 @@ Widget::~Widget()
 
 void Widget::on_setBtn_clicked()
 {
-    ui->openGLWidget->timer->setInterval(5);
+    ui->openGLWidget->timer->setInterval(10);
     ui->openGLWidget->timer->start();
 }
 

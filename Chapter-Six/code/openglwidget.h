@@ -12,6 +12,10 @@
 #include <QDebug>
 #include <QException>
 #include <QTimer>
+#include <QTime>
+#include <QtMath>
+#include <cmath>
+
 using namespace std;
 class OpenGLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_5_Core
 {
@@ -21,10 +25,9 @@ public:
     ~OpenGLWidget();
     int cur_v = 0;
     QTimer *timer;
-    QMatrix4x4 model, view, projection;
+    QMatrix4x4 model, projection;
     static float vertices[], cubeVertices[];
     static GLuint indices[];
-
     void setTrans();
 
 protected:
@@ -33,6 +36,9 @@ protected:
     void paintGL() override;
 
 private:
+    QVector3D cameraPos, cameraTarget, cameraDirection, cameraRight, cameraUp;
+    QMatrix4x4 lookAtView;
+    QVector<QMatrix4x4> views;
     QVector <QVector3D> cubePositions;
     GLuint VAO, VBO, EBO;
     QOpenGLTexture tex;

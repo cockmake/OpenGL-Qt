@@ -1,12 +1,14 @@
 #include "openglwidget.h"
-float  OpenGLWidget::vertices[] = {
+float  OpenGLWidget::vertices[] =
+{
     //局部坐标    //纹理坐标
     -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
     -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
     0.5f,  -0.5f, 0.0f, 1.0f, 0.0f,
     0.5f,   0.5f, 0.0f, 1.0f, 1.0f
 };
-float  OpenGLWidget::cubeVertices[] = {
+float  OpenGLWidget::cubeVertices[] =
+{
     //局部坐标    //纹理坐标
     // 前面四个点
     -0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
@@ -39,7 +41,8 @@ float  OpenGLWidget::cubeVertices[] = {
     -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
     -0.5f, -0.5f,  0.5f, 1.0f, 1.0f,
 };
-GLuint OpenGLWidget::indices[] = {
+GLuint OpenGLWidget::indices[] =
+{
     0,   1,  2,  3,
     4,   5,  6,  7,
     8,   9, 10, 11,
@@ -52,7 +55,8 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent),
     tex(QOpenGLTexture::Target2D)
 {
     cout << 111 << endl;
-    cubePositions = QVector <QVector3D> {
+    cubePositions = QVector <QVector3D>
+    {
         { 0.0f, 0.0f, -3.0f },
         { 2.0f, 5.0f, -18.0f },
         { -1.5f, -2.2f, -5.5f },
@@ -64,8 +68,23 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent),
         { 1.5f, 0.2f, -4.5f },
         { -1.3f, 1.0f, -4.5f }
     };
+    views = QVector<QMatrix4x4>(10);
+
+    // 摄像头相关的向量最好可以在GPU中计算
+    cameraPos = {0.0f, 0.0f, 3.0f};
+    cameraTarget = {0.0f, 0.0f, 0.0f};
+    cameraDirection = cameraPos - cameraTarget;
+    // 叉乘快速得到右边的正交向量
+    cameraRight = QVector3D::crossProduct({0.0f, 1.0f, 0.0f}, cameraDirection);
+    cameraUp = QVector3D::crossProduct(cameraDirection, cameraRight);
+    // 用这三个向量可以构建一个LookAt变化矩阵
+
+    // 也可以使用QMatrix快速创建LookAt矩阵
+    lookAtView.lookAt(cameraPos, cameraTarget, cameraUp);
+
     timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, [&](){
+    connect(timer, &QTimer::timeout, [&]()
+    {
         setTrans();
     });
     cout << this->width() << '\t' << this->height() << endl;
@@ -83,15 +102,24 @@ void OpenGLWidget::setTrans()
 {
     cur_v = (cur_v + 1) % 618;
 
+    cameraPos.setX(sin(cur_v / 100.0f));
+    cameraPos.setZ(cos(cur_v / 100.0f));
+
     model.setToIdentity();
-//    view.setToIdentity();
+    for(int i = 0; i < views.size(); i++)
+    {
+        views[i].setToIdentity();
+        views[i].lookAt(cameraPos, cameraTarget, cameraUp);
+        views[i].translate(cubePositions[i]);
+    }
+
     projection.setToIdentity();
 
-    float v = sin(static_cast <float>(cur_v) / 50.0f);
-    model.translate(QVector3D(v, -v, 0.0f));
-    model.rotate(static_cast <float>(cur_v) * 18 / 3.14, QVector3D(1.0f, 0.5f, 0.3f));
 
-//    view.translate(0.0f, 0.0f, -3.0f);
+
+//    float v = sin(static_cast <float>(cur_v) / 50.0f);
+//    model.translate(QVector3D(v, -v, 0.0f));
+    model.rotate(static_cast <float>(cur_v) * 18 / 3.14, QVector3D(1.0f, 0.5f, 0.3f));
     projection.perspective(45.0f, static_cast <float>(this->width()) / static_cast <float>(this->height()),
                            0.1f, 100.0f);
     update();
@@ -110,9 +138,7 @@ void OpenGLWidget::paintGL()
     shaderP.setUniformValue("projection", projection);
     for (int i = 0; i < cubePositions.size(); i++)
     {
-        view.setToIdentity();
-        view.translate(cubePositions[i]);
-        shaderP.setUniformValue("view", view);
+        shaderP.setUniformValue("view", views[i]);
         glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, nullptr);
     }
     glBindVertexArray(0);
