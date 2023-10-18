@@ -6,6 +6,7 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
 }
 
 Widget::~Widget()
@@ -17,6 +18,9 @@ void Widget::on_setBtn_clicked()
 {
     ui->openGLWidget->timer->setInterval(10);
     ui->openGLWidget->timer->start();
+    auto p = ui->openGLWidget->mapToGlobal(ui->openGLWidget->rect().center());
+    QCursor::setPos(p);
+    ui->openGLWidget->setFocus();
 }
 
 void Widget::on_stopBtn_clicked()

@@ -65,7 +65,17 @@
     </layout>
    </item>
    <item>
-    <widget class="OpenGLWidget" name="openGLWidget"/>
+    <widget class="OpenGLWidget" name="openGLWidget">
+     <property name="cursor">
+      <cursorShape>ArrowCursor</cursorShape>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -3,6 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_4_5_Core>
+#include <QMouseEvent>
 #include <iostream>
 #include <QImage>
 #include <QOpenGLTexture>
@@ -14,7 +15,11 @@
 #include <QTimer>
 #include <QTime>
 #include <QtMath>
+#include <QCursor>
+#include <QWheelEvent>
 #include <cmath>
+#include <unordered_set>
+#include <QTimerEvent>
 
 using namespace std;
 class OpenGLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_5_Core
@@ -36,13 +41,23 @@ protected:
     void paintGL() override;
 
 private:
+    float sensitivity, fov, speed;
+    int lastX, lastY;
+    float pitch, yaw;
+    bool enableMouse = true;
+    unordered_set<int> keys;
     QVector3D cameraPos, cameraTarget, cameraDirection, cameraRight, cameraUp;
-    QMatrix4x4 lookAtView;
     QVector<QMatrix4x4> views;
     QVector <QVector3D> cubePositions;
     GLuint VAO, VBO, EBO;
     QOpenGLTexture tex;
     QOpenGLShaderProgram shaderP;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void keyPressEvent(QKeyEvent *e) override;
+    void keyReleaseEvent(QKeyEvent *e) override;
+    void wheelEvent(QWheelEvent *e) override;
+    void timerEvent(QTimerEvent *e) override;
+    int timer_id;
 signals:
 };
 
