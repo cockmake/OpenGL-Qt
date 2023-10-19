@@ -225,3 +225,6 @@
 1. 不同设备之间的均速移动问题
 2. Qt中OpenGLWidget屏幕渲染时闪动问题
 3. Qt键盘（有可能是多个键）的高响应事件
+> 3D空间，模拟角色移动，视角控制，灵敏度平衡
+> 
+> ![img](https://raw.githubusercontent.com/cockmake/OpenGL-Qt/main/images/2023-10-19%2011-36-00.gif)
