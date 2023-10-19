@@ -1,6 +1,8 @@
 #ifndef OPENGLWIDGET_H
 #define OPENGLWIDGET_H
 
+#define SPEED_BASE 2.5e-7
+
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_4_5_Core>
 #include <QMouseEvent>
@@ -20,8 +22,10 @@
 #include <cmath>
 #include <unordered_set>
 #include <QTimerEvent>
+#include <chrono>
 
 using namespace std;
+using namespace chrono;
 class OpenGLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_5_Core
 {
     Q_OBJECT
@@ -41,6 +45,8 @@ protected:
     void paintGL() override;
 
 private:
+
+    long long int deltaTime, lastTime;
     float sensitivity, fov, speed;
     int lastX, lastY;
     float pitch, yaw;

@@ -69,8 +69,13 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent),
     };
     sensitivity = 0.002;
     fov = 45.0f;
-    speed = 0.05;
+    speed = 0.05;  // 移动速度问题一般需要根据不同设备进行动态计算
     timer_id = 0;
+
+    time_point now = system_clock::now();
+    cout << now.time_since_epoch().count() << endl;
+
+
     views = QVector<QMatrix4x4>(10);
     // 摄像头相关的向量最好可以在GPU中计算
     cameraPos = {0.0f, 0.0f, 2.0f};
@@ -122,6 +127,13 @@ void OpenGLWidget::setTrans()
 
 void OpenGLWidget::paintGL()
 {
+
+    // 一帧的开始到下一帧的开始
+    long long curTime = system_clock::now().time_since_epoch().count();
+    deltaTime = curTime - lastTime;
+    // 得出渲染一帧所需要的时间，默认时间单位为纳秒
+    lastTime = curTime;
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shaderP.bind();
@@ -136,6 +148,7 @@ void OpenGLWidget::paintGL()
         glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, nullptr);
     }
     glBindVertexArray(0);
+
 }
 
 void OpenGLWidget::mouseMoveEvent(QMouseEvent *e)
@@ -208,6 +221,9 @@ void OpenGLWidget::wheelEvent(QWheelEvent *e)
 
 void OpenGLWidget::timerEvent(QTimerEvent *e)
 {
+    // 需要动态计算移动速度
+
+    speed = SPEED_BASE * deltaTime;
 
     if(keys.count(Qt::Key_W))
     {
@@ -219,27 +235,22 @@ void OpenGLWidget::timerEvent(QTimerEvent *e)
     }
     if (keys.count(Qt::Key_A))                           //左
     {
-        cameraPos += QVector3D::crossProduct(cameraDirection, cameraUp) * speed;
+        cameraPos += QVector3D::crossProduct(cameraDirection, cameraUp).normalized() * speed;
     }
     if (keys.count(Qt::Key_D))                           //右
     {
-        cameraPos -= QVector3D::crossProduct(cameraDirection, cameraUp) * speed;
+        cameraPos -= QVector3D::crossProduct(cameraDirection, cameraUp).normalized() * speed;
     }
-    if (keys.count(Qt::Key_Space))                       //上浮
-    {
-        cameraPos.setY(cameraPos.y() + speed);
-    }
-    if (keys.count(Qt::Key_Shift))                       //下沉
-    {
-        cameraPos.setY(cameraPos.y() - speed);
-    }
+    // 注意，我们对右向量进行了标准化。如果我们没对这个向量进行标准化，
+    // 最后的叉乘结果会根据cameraFront变量返回大小不同的向量。如果我们不对向量进行标准化，
+    // 我们就得根据摄像机的朝向不同加速或减速移动了，但如果进行了标准化移动就是匀速的。
+
 }
 
 void OpenGLWidget::initializeGL()
 {
     // 数据的初始化 写在这里
     // 注意initializeGL的时候widget的大小会发生变化所以要重新设置一下projection矩阵
-    cout << this->width() << '\t' << this->height() << endl;
     lastX = this->rect().center().x(), lastY = this->rect().center().y();
 
     yaw = -M_PI_2, pitch = 0.0f;
